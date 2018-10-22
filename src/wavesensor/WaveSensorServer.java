@@ -41,7 +41,7 @@ public class WaveSensorServer {
     }
 
     public void turnSensorOff() {
-	writer.write("Off");
+	writer.write(Constants.TAG_POWER + " stop");
 	writer.flush();
     }
 
@@ -66,6 +66,7 @@ public class WaveSensorServer {
 	    writer = new PrintWriter(new DataOutputStream(clientSocket.getOutputStream()));
 	    Thread thread = new Thread(new ReceiveClientData(new DataInputStream(clientSocket.getInputStream()), this));
 	    thread.start();
+	    sendMessage("start");
 	} catch (IOException ex) {
 	    Logger.getLogger(WaveSensorServer.class.getName()).log(Level.SEVERE, null, ex);
 	}

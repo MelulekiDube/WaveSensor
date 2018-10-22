@@ -8,12 +8,10 @@ package wavesensor;
 import java.awt.EventQueue;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.util.List;
 import javax.swing.JApplet;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -36,11 +34,14 @@ public class Wavesensor {
     }
 
     public static void addDataToTable(Object[] data) {
-	tableModel.addData(data);
+	if (controller != null) {
+	    controller.addToTable(data);
+	}
     }
 
     public static void addListToTable(List<Object[]> data) {
 	tableModel.addData(data);
+	tableModel.fireTableDataChanged();
     }
 
     public static void initModel() {

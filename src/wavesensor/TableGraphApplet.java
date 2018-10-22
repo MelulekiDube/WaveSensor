@@ -17,6 +17,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 
 public class TableGraphApplet extends JApplet {
@@ -26,6 +27,7 @@ public class TableGraphApplet extends JApplet {
     private static final int TABLE_PANEL_HEIGHT_INT = 100;
     private static JFXPanel chartFxPanel;
     private static DataTableModel tableModel;
+    private static JTable table;
 
     @Override
     public void init() {
@@ -35,7 +37,7 @@ public class TableGraphApplet extends JApplet {
 	chartFxPanel.setPreferredSize(new Dimension(PANEL_WIDTH_INT, PANEL_HEIGHT_INT));
 
 	//create JTable
-	JTable table = new JTable(tableModel);
+	table = new JTable(tableModel);
 	table.setAutoCreateRowSorter(true);
 	table.setGridColor(Color.DARK_GRAY);
 	TableGraphApplet.DecimalFormatRenderer renderer
@@ -80,6 +82,7 @@ public class TableGraphApplet extends JApplet {
 
 	final BarChart chart = new BarChart(xAxis, yAxis, tableModel.getBarChartData());
 	tableModel.addTableModelListener((TableModelEvent e) -> {
+
 	    if (e.getType() == TableModelEvent.UPDATE) {
 		final int row = e.getFirstRow();
 		final int column = e.getColumn();
